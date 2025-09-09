@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TpKotlin1">
         <activity
-            android:name=".MainActivity"
+            android:name=".ListArticle"
             android:exported="true"
             android:label="@string/title_activity_main"
             android:theme="@style/Theme.TpKotlin1" >
