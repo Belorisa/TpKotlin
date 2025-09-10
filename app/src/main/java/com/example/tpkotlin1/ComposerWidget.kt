@@ -1,7 +1,11 @@
 package com.example.tpkotlin1
 
+import android.content.Context
+import android.content.Intent
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -30,8 +34,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.example.tpkotlin1.ui.theme.Article
+import com.example.tpkotlin1.Article
 import com.example.tpkotlin1.ui.theme.TpKotlin1Theme
+import kotlin.reflect.KClass
 
 
 @Composable
@@ -74,10 +79,11 @@ fun WrapPadding(content: @Composable () -> Unit){
 
 
 @Composable
-fun EniButton(label: String = "Invalid", onClick: () -> Unit = {})
+fun EniButton(label: String = "Invalid", onClick: () -> Unit = {},context: Context,target : KClass<*>)
 {
     Button(
-        onClick = {},
+        onClick = {val intent = Intent(context, target.java)
+            context.startActivity(intent)},
         modifier = Modifier
             .padding(10.dp)
             .fillMaxWidth()
@@ -87,6 +93,13 @@ fun EniButton(label: String = "Invalid", onClick: () -> Unit = {})
             Text(label )
         }
     }
+}
+
+@Composable
+fun EniClickText(label: String = "Invalid",context: Context, target: KClass<*>)
+{
+    Text(label, color = Color(0xFFeeeee4), modifier = Modifier.clickable(onClick = {val intent = Intent(context, target.java)
+        context.startActivity(intent)}))
 }
 
 @Composable

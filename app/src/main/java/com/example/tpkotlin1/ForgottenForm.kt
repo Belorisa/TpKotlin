@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -35,7 +36,7 @@ fun ForgottenPage(){
             )
             EniTitle("Récupération de Mots de Passe")
             EniTextField("Email")
-            EniButton("Envoyer le Lien")
+            EniButton("Envoyer le Lien",context = LocalContext.current, target = LoginForm::class)
         }
     }
 }

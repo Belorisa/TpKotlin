@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -12,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -41,9 +43,11 @@ fun Mainpage(){
             EniTextField("Email")
             EniTextField("Password")
             WrapPadding{
-                Text("Coucou j'ai oublié mon mots de passe !", color = Color(0xFFeeeee4), modifier = Modifier)
+                EniClickText("Coucou j'ai oublié mon mots de passe !", target = ForgottenForm::class,context = LocalContext.current)            }
+            WrapPadding {
+                EniClickText("Je ne suis pas encore inscrit", target = LoginForm::class,context = LocalContext.current)
             }
-            EniButton("Connexion")
+            EniButton("Connexion",context = LocalContext.current,target = ListArticle::class)
         }
     }
 }
