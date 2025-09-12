@@ -2,7 +2,6 @@ package com.example.tpkotlin1
 
 import android.content.Context
 import android.content.Intent
-import androidx.activity.ComponentActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -34,7 +33,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.example.tpkotlin1.Article
+import com.example.tpkotlin1.helper.ProgressDialogue
 import com.example.tpkotlin1.ui.theme.TpKotlin1Theme
 import kotlin.reflect.KClass
 
@@ -56,6 +55,7 @@ fun Template(content: @Composable () -> Unit){
             Box(modifier = Modifier.padding(innerPadding )){
                 BackgroundImage()
                 content()
+                ProgressDialogue()
             }
 
         }
@@ -79,10 +79,11 @@ fun WrapPadding(content: @Composable () -> Unit){
 
 
 @Composable
-fun EniButton(label: String = "Invalid", onClick: () -> Unit = {},context: Context,target : KClass<*>)
+fun EniButton(label: String = "Invalid", onClick: () -> Unit = {},context: Context,target : KClass<*>,int: String = "")
 {
     Button(
         onClick = {val intent = Intent(context, target.java)
+            intent.putExtra("id", int)
             context.startActivity(intent)},
         modifier = Modifier
             .padding(10.dp)
@@ -117,19 +118,19 @@ fun EniTitle(label:String = "Invalide")
 }
 
 @Composable
-fun ArticleCard(article: Article) {
+fun ArticleCard(article: Article?) {
     ElevatedCard(modifier = Modifier.fillMaxWidth()) {
         Column {
             Row(modifier = Modifier.padding(10.dp), verticalAlignment = Alignment.CenterVertically) {
                 AsyncImage(
-                    model = article.imgPath,
+                    model = article?.imgPath,
                     contentDescription = "",
                     placeholder = painterResource(R.drawable.logo_eni_round),
-                    modifier = Modifier.size(50.dp)
+                    modifier = Modifier.size(100.dp)
                 )
                 Column(modifier = Modifier.padding(10.dp)) {
-                    Text(article.title, fontWeight = FontWeight.Bold)
-                    Text(article.desc , color = Color(0xFF555555))
+                    article?.title?.let { Text(it, fontWeight = FontWeight.Bold) }
+                    article?.desc?.let { Text(it , color = Color(0xFF555555)) }
                 }
             }
             Box(

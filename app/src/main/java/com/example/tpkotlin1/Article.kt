@@ -1,5 +1,12 @@
 package com.example.tpkotlin1
 
-data class Article(var title: String, var desc: String,var imgPath: String) {
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
+data class Article( val id: String,
+                    val title: String,
+                    val desc: String,
+                    val author: String,
+                    val imgPath: String
+) {
 }
