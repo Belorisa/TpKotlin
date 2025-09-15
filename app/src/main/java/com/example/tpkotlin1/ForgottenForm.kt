@@ -35,7 +35,7 @@ fun ForgottenPage(){
                 ,modifier = Modifier.fillMaxWidth().padding(bottom = 20.dp)
             )
             EniTitle("Récupération de Mots de Passe")
-            EniTextField("Email")
+            //EniTextField("Email",)
             EniButton("Envoyer le Lien",context = LocalContext.current, target = LoginForm::class)
         }
     }

@@ -21,6 +21,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -30,9 +33,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.example.tpkotlin1.helper.AlertDialog
 import com.example.tpkotlin1.helper.ProgressDialogue
 import com.example.tpkotlin1.ui.theme.TpKotlin1Theme
 import kotlin.reflect.KClass
@@ -56,6 +61,7 @@ fun Template(content: @Composable () -> Unit){
                 BackgroundImage()
                 content()
                 ProgressDialogue()
+                AlertDialog()
             }
 
         }
@@ -63,9 +69,18 @@ fun Template(content: @Composable () -> Unit){
 }
 
 @Composable
-fun EniTextField(label: String = "invalid")
+fun EniTextField(label: String = "invalid", value : String, onValueChange: (String) -> Unit)
 {
-    TextField(value = "", onValueChange = {}, label = {Text(label, color = Color(0xFFeeeee4))}, colors = TextFieldDefaults.colors( unfocusedContainerColor = Color.Transparent, focusedContainerColor = Color.Transparent,focusedIndicatorColor = Color(0xFFeeeee4)))
+
+    TextField(value = value, onValueChange = onValueChange,
+        label = {Text(label, color = Color(0xFFeeeee4))},
+        colors = TextFieldDefaults.colors(
+            unfocusedContainerColor = Color.Transparent,
+            focusedContainerColor = Color.Transparent,
+            focusedIndicatorColor = Color(0xFFeeeee4)
+        )
+    )
+
 }
 
 
@@ -90,7 +105,34 @@ fun EniButton(label: String = "Invalid", onClick: () -> Unit = {},context: Conte
             .fillMaxWidth()
         , colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent)
     ) {
-        Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxWidth().background(shape = ButtonDefaults.shape,brush = Brush.horizontalGradient(listOf(Color(0xFF2596be), Color(0xFF154c79)))).padding(vertical = 14.dp)){
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.fillMaxWidth().background(
+                shape = ButtonDefaults.shape,
+                brush = Brush.horizontalGradient(
+                    listOf(Color(0xFF2596be), Color(0xFF154c79)))).padding(vertical = 14.dp)){
+            Text(label )
+        }
+    }
+}
+
+
+@Composable
+fun EniButtonLogin(label: String = "Invalid",onClick: () -> Unit)
+{
+    Button(
+        onClick = onClick,
+        modifier = Modifier
+            .padding(10.dp)
+            .fillMaxWidth()
+        , colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent)
+    ) {
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.fillMaxWidth().background(
+                shape = ButtonDefaults.shape,
+                brush = Brush.horizontalGradient(
+                    listOf(Color(0xFF2596be), Color(0xFF154c79)))).padding(vertical = 14.dp)){
             Text(label )
         }
     }

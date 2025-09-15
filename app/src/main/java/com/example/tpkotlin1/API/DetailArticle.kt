@@ -14,11 +14,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.tpkotlin1.ArticleCard
 import com.example.tpkotlin1.ArticleViewModel
+import com.example.tpkotlin1.EniButton
 import com.example.tpkotlin1.EniTitle
+import com.example.tpkotlin1.ListArticle
 import com.example.tpkotlin1.Mainpage
 import com.example.tpkotlin1.Template
 
@@ -53,7 +56,14 @@ fun DetailArticles(viewModel: ArticleViewModel){
             EniTitle("Detail d'Article")
             Spacer(modifier = Modifier.height(40.dp))
             ArticleCard(articleId)
+
         }
+        EniButton(
+            label = "Retour Liste",
+            context = LocalContext.current,
+            target = ListArticle::class
+        )
+
     }
 }
 

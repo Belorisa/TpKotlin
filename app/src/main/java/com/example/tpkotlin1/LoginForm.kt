@@ -37,13 +37,13 @@ fun LoginPage(){
             )
 
             EniTitle("Sign in")
-            EniTextField("Pseudo")
-            EniTextField("Email")
-            EniTextField("Password")
-            EniTextField("Password Confirmation")
-            EniTextField("Code Postal")
-            EniTextField("Ville")
-            EniTextField("Telephone")
+//            EniTextField("Pseudo")
+//            EniTextField("Email")
+//            EniTextField("Password")
+//            EniTextField("Password Confirmation")
+//            EniTextField("Code Postal")
+//            EniTextField("Ville")
+//            EniTextField("Telephone")
             EniButton("Sign In",context = LocalContext.current,target = ListArticle::class)
         }
     }

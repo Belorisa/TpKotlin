@@ -29,10 +29,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.example.tpkotlin1.API.DetailArticle
+import com.example.tpkotlin1.API.UserViewModel
 
 
 class ListArticle : ComponentActivity() {
     val articlesList = ArticleViewModel()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +50,7 @@ fun PageList(viewModel: ArticleViewModel){
 
 
     val articles by viewModel.articles.collectAsState()
+
 
 //    LaunchedEffect(Unit) {
 //        viewModel.ajouterArticle(Article("Chips","Des chips !","https://www.valgourmand.com/36711-superlarge_default/chips-nature-lays-45g.webp"))

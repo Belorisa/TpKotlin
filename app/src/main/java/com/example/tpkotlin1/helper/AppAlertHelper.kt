@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -17,42 +16,47 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class AppProgressHelper {
 
-    // Singleton du AppProgressHelper
+data class AlertDialogueModelData(var isShow : Boolean = false, var message :String = "") {
+
+}
+
+class AppAlertHelper {
+
+
     companion object {
-        val instance : AppProgressHelper by lazy { AppProgressHelper() }
+        val instance : AppAlertHelper by lazy { AppAlertHelper() }
 
-        fun get() : AppProgressHelper {
+        fun get() : AppAlertHelper {
             return instance;
         }
     }
 
     // Sert à savoir en temps réel si il faut afficher ou pas la dialog
-    var progressDialogueModelData = MutableStateFlow(ProgressDialogueModelData());
+    var alertsDialogueModelData = MutableStateFlow(AlertDialogueModelData());
 
-    fun show(message: String){
-        progressDialogueModelData.value = progressDialogueModelData.value.copy(isShow = true, message = message)
+    fun show(message: String, onClose: () -> Unit){
+        alertsDialogueModelData.value = alertsDialogueModelData.value.copy(isShow = true, message = message,onClose = onClose)
 
     }
 
     fun close(){
-        progressDialogueModelData.value = progressDialogueModelData.value.copy(isShow = false)
+        alertsDialogueModelData.value = alertsDialogueModelData.value.copy(isShow = false)
 
 
     }
-
-
 }
 
-@Composable
-fun ProgressDialogue()
-{
-    val modelData by AppProgressHelper.get().progressDialogueModelData.collectAsState()
 
-    if(modelData.isShow)
-    {
-        Dialog(onDismissRequest = {}) {
+
+
+@Composable
+fun AlertDialog()
+{
+    val modelData by AppAlertHelper.get().alertsDialogueModelData.collectAsState()
+
+    if(modelData.isShow) {
+        Dialog(onDismissRequest = {AppAlertHelper.get().close()}) {
             Box(
                 modifier = Modifier.background(
                     color = Color(0xFFFFFFFF),
@@ -61,7 +65,6 @@ fun ProgressDialogue()
                     .padding(20.dp)
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    CircularProgressIndicator()
                     Text(text = modelData.message)
                 }
             }
