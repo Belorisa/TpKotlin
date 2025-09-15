@@ -27,7 +27,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        userView = MutableStateFlow(UserViewModel())
+        userView = MutableStateFlow(UserViewModel(email = "isaac@gmail.com", password = "password"))
 
         setContent {
             Mainpage(userView)

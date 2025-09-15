@@ -17,7 +17,7 @@ import androidx.compose.ui.window.Dialog
 import kotlinx.coroutines.flow.MutableStateFlow
 
 
-data class AlertDialogueModelData(var isShow : Boolean = false, var message :String = "") {
+data class AlertDialogueModelData(var isShow : Boolean = false, var message :String = "",var onClose: () -> Unit = {}) {
 
 }
 
@@ -28,21 +28,21 @@ class AppAlertHelper {
         val instance : AppAlertHelper by lazy { AppAlertHelper() }
 
         fun get() : AppAlertHelper {
-            return instance;
+            return instance
         }
     }
 
     // Sert à savoir en temps réel si il faut afficher ou pas la dialog
-    var alertsDialogueModelData = MutableStateFlow(AlertDialogueModelData());
+    var alertsDialogueModelData = MutableStateFlow(AlertDialogueModelData())
 
-    fun show(message: String, onClose: () -> Unit){
+    fun show(message: String, onClose: () -> Unit = {}){
         alertsDialogueModelData.value = alertsDialogueModelData.value.copy(isShow = true, message = message,onClose = onClose)
 
     }
 
     fun close(){
         alertsDialogueModelData.value = alertsDialogueModelData.value.copy(isShow = false)
-
+        alertsDialogueModelData.value.onClose()
 
     }
 }
@@ -56,7 +56,9 @@ fun AlertDialog()
     val modelData by AppAlertHelper.get().alertsDialogueModelData.collectAsState()
 
     if(modelData.isShow) {
-        Dialog(onDismissRequest = {AppAlertHelper.get().close()}) {
+        Dialog(onDismissRequest = {
+            AppAlertHelper.get().close()
+        }) {
             Box(
                 modifier = Modifier.background(
                     color = Color(0xFFFFFFFF),

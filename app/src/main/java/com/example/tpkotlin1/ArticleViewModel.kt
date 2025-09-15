@@ -3,7 +3,6 @@ package com.example.tpkotlin1
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.tpkotlin1.API.ArticleService
-import com.example.tpkotlin1.helper.AppAlertHelper
 import com.example.tpkotlin1.helper.AppProgressHelper
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,12 +28,10 @@ class ArticleViewModel : ViewModel(){
             delay(duration = 2.seconds)
             val apiResponse = ArticleService.ArticleServiceApi.articleService.getArticles()
 
-            articles.value = apiResponse.data
+            articles.value = apiResponse.data!!
 
             AppProgressHelper.get().close()
 
-            //afficher le message du back
-            AppAlertHelper.get().show(apiResponse.message,)
         }
     }
 
