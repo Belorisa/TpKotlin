@@ -18,7 +18,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.tpkotlin1.ArticleCard
-import com.example.tpkotlin1.ArticleViewModel
+import com.example.tpkotlin1.ViewModel.ArticleViewModel
 import com.example.tpkotlin1.EniButton
 import com.example.tpkotlin1.EniTitle
 import com.example.tpkotlin1.ListArticle

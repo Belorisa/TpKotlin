@@ -29,7 +29,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.example.tpkotlin1.API.DetailArticle
-import com.example.tpkotlin1.API.UserViewModel
+import com.example.tpkotlin1.ViewModel.UserViewModel
+import com.example.tpkotlin1.ViewModel.ArticleViewModel
 
 
 class ListArticle : ComponentActivity() {

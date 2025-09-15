@@ -16,7 +16,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.tpkotlin1.API.UserViewModel
+import com.example.tpkotlin1.ViewModel.UserViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 
 

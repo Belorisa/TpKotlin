@@ -35,6 +35,11 @@
             android:name=".API.DetailArticle"
             android:exported="true"
             android:theme="@style/Theme.TpKotlin1"/>
+
+        <activity
+            android:name=".LoginForm"
+            android:exported="true"
+            android:theme="@style/Theme.TpKotlin1"/>
     </application>
 
 </manifest>

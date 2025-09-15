@@ -9,24 +9,36 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.tpkotlin1.ViewModel.UserSubscribeViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 
 class LoginForm : ComponentActivity() {
+    lateinit var subscribeview : MutableStateFlow<UserSubscribeViewModel>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        subscribeview = MutableStateFlow(UserSubscribeViewModel())
         setContent {
-            LoginPage()
+            LoginPage(subscribeview)
         }
     }
 }
 
 @Composable
-fun LoginPage(){
+fun LoginPage(subscribeModel : MutableStateFlow<UserSubscribeViewModel>){
+
+    val subscribeState by subscribeModel.collectAsState()
+
+    val context = LocalContext.current
+
     Template {
         Column(modifier = Modifier.padding(60.dp).padding(top = 50.dp)) {
 
@@ -37,14 +49,50 @@ fun LoginPage(){
             )
 
             EniTitle("Sign in")
-//            EniTextField("Pseudo")
-//            EniTextField("Email")
-//            EniTextField("Password")
-//            EniTextField("Password Confirmation")
-//            EniTextField("Code Postal")
-//            EniTextField("Ville")
-//            EniTextField("Telephone")
-            EniButton("Sign In",context = LocalContext.current,target = ListArticle::class)
+            EniTextField("Pseudo",
+                value = subscribeState.pseudo,
+                onValueChange = {
+                    newPseudo -> subscribeModel.value = subscribeModel.value.copy(pseudo = newPseudo)
+                }
+                )
+            EniTextField("Email",
+                value = subscribeState.email,
+                onValueChange = {
+                        newEmail-> subscribeModel.value = subscribeModel.value.copy(email = newEmail)
+                }
+            )
+            EniTextField("Password",
+                value = subscribeState.password,
+                onValueChange = {
+                        newPassword -> subscribeModel.value = subscribeModel.value.copy(password = newPassword)
+                }
+            )
+            EniTextField("Password Confirmation",
+                value = subscribeState.passwordConfirm,
+                onValueChange = {
+                        newPasswordC -> subscribeModel.value = subscribeModel.value.copy(passwordConfirm = newPasswordC)
+                }
+            )
+            EniTextField("Code Postal",
+                value = subscribeState.cityCode,
+                onValueChange = {
+                        newCityCode -> subscribeModel.value = subscribeModel.value.copy(cityCode = newCityCode)
+                }
+            )
+            EniTextField("Ville",
+                value = subscribeState.city,
+                onValueChange = {
+                        newCity -> subscribeModel.value = subscribeModel.value.copy(city = newCity)
+                }
+            )
+            EniTextField("Telephone",
+                value = subscribeState.phone,
+                onValueChange = {
+                        newPhone -> subscribeModel.value = subscribeModel.value.copy(phone = newPhone)
+                }
+            )
+            EniButtonLogin("Connexion", onClick = {subscribeState.subscribe(context)
+            })
         }
     }
 }
@@ -53,5 +101,5 @@ fun LoginPage(){
 @Preview(showBackground = true)
 @Composable
 fun LoginPreview() {
-    LoginPage()
+    LoginPage(subscribeModel = MutableStateFlow(UserSubscribeViewModel()))
 }

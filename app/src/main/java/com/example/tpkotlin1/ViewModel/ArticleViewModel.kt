@@ -1,8 +1,9 @@
-package com.example.tpkotlin1
+package com.example.tpkotlin1.ViewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.tpkotlin1.API.ArticleService
+import com.example.tpkotlin1.Service.ArticleService
+import com.example.tpkotlin1.Article
 import com.example.tpkotlin1.helper.AppProgressHelper
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,7 +23,7 @@ class ArticleViewModel : ViewModel(){
     }
 
     fun callArticlesApi(){
-        AppProgressHelper.get().show("Chargement des articles")
+        AppProgressHelper.Companion.get().show("Chargement des articles")
         viewModelScope.launch {
 
             delay(duration = 2.seconds)
@@ -30,7 +31,7 @@ class ArticleViewModel : ViewModel(){
 
             articles.value = apiResponse.data!!
 
-            AppProgressHelper.get().close()
+            AppProgressHelper.Companion.get().close()
 
         }
     }

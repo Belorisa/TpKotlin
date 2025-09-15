@@ -1,5 +1,6 @@
-package com.example.tpkotlin1.API
+package com.example.tpkotlin1.Service
 
+import com.example.tpkotlin1.API.ApiResponse
 import com.example.tpkotlin1.API.RetrofitTools.Companion.retrofit
 import com.example.tpkotlin1.Article
 import retrofit2.http.GET
