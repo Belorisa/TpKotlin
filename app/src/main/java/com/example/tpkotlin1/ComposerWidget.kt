@@ -21,9 +21,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -33,10 +30,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.example.tpkotlin1.ViewModel.Article
 import com.example.tpkotlin1.helper.AlertDialog
 import com.example.tpkotlin1.helper.ProgressDialogue
 import com.example.tpkotlin1.ui.theme.TpKotlin1Theme
@@ -94,7 +91,11 @@ fun WrapPadding(content: @Composable () -> Unit){
 
 
 @Composable
-fun EniButton(label: String = "Invalid", onClick: () -> Unit = {},context: Context,target : KClass<*>,int: String = "")
+fun EniButton(
+    label: String = "Invalid", onClick: () -> Unit = {},
+    context: Context,
+    target: KClass<*>,
+    int: String? = "")
 {
     Button(
         onClick = {val intent = Intent(context, target.java)
@@ -160,7 +161,7 @@ fun EniTitle(label:String = "Invalide")
 }
 
 @Composable
-fun ArticleCard(article: Article?) {
+fun ArticleCard(article: Article) {
     ElevatedCard(modifier = Modifier.fillMaxWidth()) {
         Column {
             Row(modifier = Modifier.padding(10.dp), verticalAlignment = Alignment.CenterVertically) {

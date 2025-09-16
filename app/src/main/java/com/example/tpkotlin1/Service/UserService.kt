@@ -34,6 +34,13 @@ data class User(
     val phone: String
 )
 {}
+
+
+data class PasswordRequest(
+    val email: String
+)
+{}
+
 interface UserService {
 
     @POST("login")
@@ -43,6 +50,9 @@ interface UserService {
     @POST("signup")
     suspend fun signUpUser(@Body request: SubscribeRequest) : ApiResponse<User>
 
+
+    @POST("reset-password")
+    suspend fun passwordReset(@Body request : PasswordRequest) : ApiResponse<String>
     object UserServiceApi {
         val userService : UserService by lazy { retrofit.create(UserService::class.java) }
     }

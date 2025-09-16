@@ -1,6 +1,5 @@
 package com.example.tpkotlin1.API
 
-import com.example.tpkotlin1.Article
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
