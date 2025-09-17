@@ -166,14 +166,14 @@ fun ArticleCard(article: Article) {
         Column {
             Row(modifier = Modifier.padding(10.dp), verticalAlignment = Alignment.CenterVertically) {
                 AsyncImage(
-                    model = article?.imgPath,
+                    model = article.imgPath,
                     contentDescription = "",
                     placeholder = painterResource(R.drawable.logo_eni_round),
                     modifier = Modifier.size(100.dp)
                 )
-                Column(modifier = Modifier.padding(10.dp)) {
-                    article?.title?.let { Text(it, fontWeight = FontWeight.Bold) }
-                    article?.desc?.let { Text(it , color = Color(0xFF555555)) }
+                Column(modifier = Modifier.padding(10.dp).weight(2f)) {
+                    Text(article.title, fontWeight = FontWeight.Bold)
+                    Text(article.desc, color = Color(0xFF555555), maxLines = 2)
                 }
             }
             Box(
