@@ -1,14 +1,17 @@
 package com.example.tpkotlin1.ViewModel
 
+import android.app.Application
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.tpkotlin1.ListArticle
+import com.example.tpkotlin1.R
 import com.example.tpkotlin1.Service.ArticleService
 import com.example.tpkotlin1.Service.UserService
 import com.example.tpkotlin1.helper.AppAlertHelper
 import com.example.tpkotlin1.helper.AppContextHelper
 import com.example.tpkotlin1.helper.AppProgressHelper
+import com.example.tpkotlin1.helper.commonCallApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -21,15 +24,15 @@ data class Article(val id: String? = null,
 )
 {}
 
-class ArticleViewModel : ViewModel(){
+class ArticleViewModel(application : Application) : EniViewModel(application){
 
     val articles = MutableStateFlow<List<Article>>(emptyList())
-    val article = MutableStateFlow(Article())
+    val article = MutableStateFlow<Article>(Article())
 
 
     fun ajouterArticle(context: Context)
     {
-        AppProgressHelper.Companion.get().show("Ajout de l'article")
+        AppProgressHelper.Companion.get().show(getString(R.string.helper_add_article))
 
         viewModelScope.launch {
             delay( duration = 2.seconds)
@@ -69,7 +72,7 @@ class ArticleViewModel : ViewModel(){
     }
 
     fun deleteArticle(context : Context){
-        AppProgressHelper.Companion.get().show("Suppression de l'article")
+        AppProgressHelper.Companion.get().show(getString(R.string.helper_del_article))
 
         viewModelScope.launch {
             delay( duration = 2.seconds)
@@ -90,23 +93,23 @@ class ArticleViewModel : ViewModel(){
 
 
     fun callArticlesApi(){
-        AppProgressHelper.Companion.get().show("Chargement des articles")
-        viewModelScope.launch {
 
-            delay(duration = 2.seconds)
+        commonCallApi<List<Article>>(getString(R.string.helper_load_articles),viewModelScope, doAction = {
             val apiResponse = ArticleService.ArticleServiceApi.articleService.getArticles()
-
             articles.value = apiResponse.data!!
 
-            AppProgressHelper.Companion.get().close()
+            apiResponse
+        })
 
-        }
     }
 
     fun callArticle(id : String){
-        viewModelScope.launch {
-            article.value = ArticleService.ArticleServiceApi.articleService.getArticle(id).data!!
-        }
+        commonCallApi<Article>(getString(R.string.helper_load_articles),viewModelScope, doAction = {
+            val apiResponse = ArticleService.ArticleServiceApi.articleService.getArticle(id)
+            article.value = apiResponse.data!!
+
+            apiResponse
+        })
     }
 
 }

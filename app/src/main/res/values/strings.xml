@@ -2,4 +2,35 @@
     <string name="app_name">TpKotlin1</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_article_form">ArticleForm</string>
+    <string name="title_login">Login</string>
+    <string name="label_mail">Email</string>
+    <string name="label_pseudo">Pseudo</string>
+    <string name="label_password">Mots de Passe</string>
+    <string name="label_password_confirm">Mots de Passe de Confirmation</string>
+    <string name="label_adress">Adresse</string>
+    <string name="label_city_code">Code Postal</string>
+    <string name="label_city">Ville</string>
+    <string name="label_surname">Prenom</string>
+    <string name="label_name">Nom</string>
+    <string name="label_phone">Numéro de téléphone</string>
+    <string name="label_forgot_pass">Oublie de mots de passe</string>
+    <string name="label_not_sub_yet">S\'inscrire</string>
+    <string name="label_article_title">Titre</string>
+    <string name="label_article_desc">Description</string>
+    <string name="label_article_author">Description</string>
+    <string name="label_article_linkImg">Lien d\'image</string>
+    <string name="label_title_article_detail">Detail d\'Article</string>
+    <string name="label_change">Modifier</string>
+    <string name="label_delete">Supprimer</string>
+    <string name="label_return">Retour à la Liste</string>
+    <string name="label_article_list">Liste d\'Article</string>
+    <string name="btn_article_create">Créer un article</string>
+    <string name="btn_login">Connexion</string>
+    <string name="helper_add_article">Ajout de l\'article</string>
+    <string name="helper_del_article">Suppression de l\'article</string>
+    <string name="helper_load_articles">Chargement des l\'articles</string>
+    <string name="helper_load_article">Chargement des l\'article</string>
+    <string name="helper_reset_password">Generation d\'un nouveau mots de passe</string>
+    <string name="helper_user_subscribe">Inscription</string>
+
 </resources>

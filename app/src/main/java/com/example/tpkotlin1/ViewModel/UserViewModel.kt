@@ -7,9 +7,11 @@ import com.example.tpkotlin1.API.AuthContext
 import com.example.tpkotlin1.Service.LoginRequest
 import com.example.tpkotlin1.Service.UserService
 import com.example.tpkotlin1.ListArticle
+import com.example.tpkotlin1.Service.ArticleService
 import com.example.tpkotlin1.helper.AppAlertHelper
 import com.example.tpkotlin1.helper.AppContextHelper
 import com.example.tpkotlin1.helper.AppProgressHelper
+import com.example.tpkotlin1.helper.commonCallApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.seconds
@@ -17,40 +19,20 @@ import kotlin.time.Duration.Companion.seconds
 data class UserViewModel(var email : String = "", var password : String = "") : ViewModel() {
 
 
-    fun login(context: Context)
+    fun login(onLoginSucces : () -> Unit = {})
     {
 
-
-        viewModelScope.launch {
-
-            AppProgressHelper.Companion.get().show("Login")
-
-
-            delay(duration = 1.seconds)
-
-            val request = LoginRequest(email = email, password = password)
-
-            val response = UserService.UserServiceApi.userService.loginUser(request)
-
-            AppProgressHelper.Companion.get().close()
-
-            // Stocker le token
-            if (response.code.equals("200")){
-                AuthContext.Companion.get().setAuthToken(response.data!!);
-            }
-
-                AppAlertHelper.Companion.get().show(response.code,onClose = {
-                    if(response.code.equals("200"))
-                    {
-                        AppContextHelper.Companion.openActivity(context, ListArticle::class)
-                    }
-                })
-
-
-
-
-        }
-
+            commonCallApi<String>("Tentative de connexion",viewModelScope, doAction = {
+                val request = LoginRequest(email = email, password = password)
+                val apiResponse = UserService.UserServiceApi.userService.loginUser(request)
+                if (apiResponse.code.equals("200")){
+                    AuthContext.Companion.get().setAuthToken(apiResponse.data!!);
+                    onLoginSucces()
+                }
+                apiResponse
+            })
 
     }
+
+
 }

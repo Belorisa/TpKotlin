@@ -1,5 +1,6 @@
 package com.example.tpkotlin1
 
+import android.app.Application
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -15,21 +16,25 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.tpkotlin1.ViewModel.ArticleViewModel
 
 class DetailArticle : ComponentActivity() {
+    lateinit var viewModel: ArticleViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val article = ArticleViewModel()
+
         val id = intent.getStringExtra("id")
 
-        article.callArticle(id!!)
+        viewModel = ArticleViewModel(application = application)
+        viewModel.callArticle(id!!)
+
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            DetailArticles(viewModel = article,id)
+            DetailArticles(viewModel,id)
         }
 
     }
@@ -49,23 +54,23 @@ fun DetailArticles(viewModel: ArticleViewModel, id : String){
                 .padding(top = 10.dp)
         ) {
             Spacer(modifier = Modifier.Companion.height(140.dp))
-            EniTitle("Detail d'Article")
+            EniTitle(stringResource(R.string.label_title_article_detail))
             Spacer(modifier = Modifier.Companion.height(40.dp))
             ArticleCard(articleId)
 
             EniButton(
-                label = "Modifier",
+                label = stringResource(R.string.label_change),
                 context = LocalContext.current,
                 target = ArticleForm::class,
                 int = id
             )
-            EniButtonLogin (
-                label = "Supprimer", onClick = {
+            EniButtonClick (
+                label = stringResource(R.string.label_delete), onClick = {
                     viewModel.deleteArticle(context)
                 }
             )
             EniButton(
-                label = "Retour Liste",
+                label = stringResource(R.string.label_return),
                 context = LocalContext.current,
                 target = ListArticle::class
             )
@@ -79,5 +84,5 @@ fun DetailArticles(viewModel: ArticleViewModel, id : String){
 @Preview(showBackground = true)
 @Composable
 fun DetailPreview() {
-    DetailArticles(viewModel = ArticleViewModel(),"test")
+    DetailArticles(viewModel = ArticleViewModel(Application()),"test")
 }

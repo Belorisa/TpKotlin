@@ -1,5 +1,6 @@
 package com.example.tpkotlin1
 
+import android.app.Application
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -27,7 +28,7 @@ class ForgottenForm : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        passwordView = MutableStateFlow(UserPasswordViewModel())
+        passwordView = MutableStateFlow(UserPasswordViewModel(_application = application))
 
         setContent {
             ForgottenPage(passwordView)
@@ -55,7 +56,7 @@ fun ForgottenPage(passwordModel : MutableStateFlow<UserPasswordViewModel>){
                     newMail -> passwordModel.value = passwordModel.value.copy(email = newMail)
                 }
                 )
-            EniButtonLogin("Envoyer le Lien", onClick = {passwordState.resetPassword(context)})
+            EniButtonClick("Envoyer le Lien", onClick = {passwordState.resetPassword(context)})
         }
     }
 }
@@ -63,5 +64,5 @@ fun ForgottenPage(passwordModel : MutableStateFlow<UserPasswordViewModel>){
 @Preview(showBackground = true)
 @Composable
 fun ForgottenPreview() {
-    ForgottenPage(passwordModel = MutableStateFlow((UserPasswordViewModel())))
+    ForgottenPage(passwordModel = MutableStateFlow((UserPasswordViewModel(_application =  Application()))))
 }

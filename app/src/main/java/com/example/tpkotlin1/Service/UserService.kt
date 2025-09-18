@@ -14,9 +14,9 @@ data class LoginRequest(
 {}
 
 data class SubscribeRequest(
-    val email: String,
-    val password: String,
-    val passwordConfirm: String,
+    val email: String = "example@test.fr",
+    val password: String = "passsword",
+    val passwordConfirm: String = "passsword",
     val pseudo: String = "User",
     val cityCode: String ="4400",
     val city: String ="Nantes",

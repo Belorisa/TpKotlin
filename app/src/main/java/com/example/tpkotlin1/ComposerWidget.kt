@@ -119,7 +119,7 @@ fun EniButton(
 
 
 @Composable
-fun EniButtonLogin(label: String = "Invalid",onClick: () -> Unit)
+fun EniButtonClick(label: String = "Invalid", onClick: () -> Unit)
 {
     Button(
         onClick = onClick,
@@ -140,10 +140,9 @@ fun EniButtonLogin(label: String = "Invalid",onClick: () -> Unit)
 }
 
 @Composable
-fun EniClickText(label: String = "Invalid",context: Context, target: KClass<*>)
+fun EniClickText(label: String = "Invalid",onClick: () -> Unit)
 {
-    Text(label, color = Color(0xFFeeeee4), modifier = Modifier.clickable(onClick = {val intent = Intent(context, target.java)
-        context.startActivity(intent)}))
+    Text(label, color = Color(0xFFeeeee4), modifier = Modifier.clickable(onClick = onClick))
 }
 
 @Composable

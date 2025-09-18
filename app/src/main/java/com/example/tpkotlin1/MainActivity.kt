@@ -14,9 +14,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.tpkotlin1.ViewModel.UserViewModel
+import com.example.tpkotlin1.helper.AppContextHelper
 import kotlinx.coroutines.flow.MutableStateFlow
 
 
@@ -48,27 +50,31 @@ fun Mainpage(userModel: MutableStateFlow<UserViewModel>){
                 ,modifier = Modifier.fillMaxWidth().padding(bottom = 20.dp)
             )
 
-            EniTitle("Login")
+            EniTitle(stringResource(R.string.title_login))
             EniTextField(
-                "Email",
+                stringResource(R.string.label_mail),
                 value = userState.email,
                 onValueChange = {
                     newMail -> userModel.value = userModel.value.copy(email = newMail)
                 }
                 )
             EniTextField(
-                "Password",
+                stringResource(R.string.label_password),
                 value = userState.password,
                 onValueChange = {
                         newMail -> userModel.value = userModel.value.copy(password = newMail)
                 }
                 )
             WrapPadding{
-                EniClickText("Coucou j'ai oublié mon mots de passe !", target = ForgottenForm::class,context = LocalContext.current)            }
-            WrapPadding {
-                EniClickText("Je ne suis pas encore inscrit", target = LoginForm::class,context = LocalContext.current)
+                EniClickText(stringResource(R.string.label_forgot_pass), onClick = {AppContextHelper.openActivity(context, ForgottenForm::class)})
             }
-            EniButtonLogin("Connexion", onClick = {userState.login(context)
+            WrapPadding {
+                EniClickText(stringResource(R.string.label_not_sub_yet), onClick = {AppContextHelper.openActivity(context, LoginForm::class)} )
+            }
+            EniButtonClick(stringResource(R.string.btn_login), onClick = {
+                    userState.login(onLoginSucces = {
+                        AppContextHelper.openActivity(context, ListArticle::class)
+                    })
                 })
         }
     }

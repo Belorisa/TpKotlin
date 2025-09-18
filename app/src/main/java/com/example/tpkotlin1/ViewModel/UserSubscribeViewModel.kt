@@ -1,49 +1,38 @@
 package com.example.tpkotlin1.ViewModel
 
+import android.app.Application
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.tpkotlin1.API.AuthContext
 import com.example.tpkotlin1.ListArticle
+import com.example.tpkotlin1.R
+import com.example.tpkotlin1.Service.ArticleService
 import com.example.tpkotlin1.Service.LoginRequest
 import com.example.tpkotlin1.Service.SubscribeRequest
+import com.example.tpkotlin1.Service.User
 import com.example.tpkotlin1.Service.UserService
 import com.example.tpkotlin1.helper.AppAlertHelper
 import com.example.tpkotlin1.helper.AppContextHelper
 import com.example.tpkotlin1.helper.AppProgressHelper
+import com.example.tpkotlin1.helper.commonCallApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.seconds
 
-data class UserSubscribeViewModel(val email: String="", val password: String="",val passwordConfirm: String = "", val pseudo: String = "User", val cityCode: String ="4400", val city: String ="Nantes", val phone: String ="06660000")
-    : ViewModel() {
+data class UserSubscribeViewModel(var subscribeRequest : SubscribeRequest = SubscribeRequest(),val _application : Application)
+    : EniViewModel(_application) {
 
-        fun subscribe(context: Context){
+        fun subscribe(onSubscribeRequestSuccess : () -> Unit = {}){
 
-            viewModelScope.launch {
+            commonCallApi<User>(getString(R.string.helper_user_subscribe),viewModelScope, doAction = {
+                val apiResponse = UserService.UserServiceApi.userService.signUpUser(subscribeRequest)
+                if (apiResponse.code.equals("200")){
+                    onSubscribeRequestSuccess()
+                }
 
-                AppProgressHelper.Companion.get().show("Inscription")
-                delay(duration = 1.seconds)
-                    val request = SubscribeRequest(
-                        email = email,
-                        password = password,
-                        passwordConfirm = passwordConfirm,
-                        pseudo = pseudo,
-                        cityCode = cityCode,
-                        city = city,
-                        phone = phone
-                    )
-
-                    val response = UserService.UserServiceApi.userService.signUpUser(request)
-
-                    AppProgressHelper.Companion.get().close()
-
-                    AppAlertHelper.Companion.get().show(response.message,onClose = {
-                        if(response.code.equals("200"))
-                        {
-                            AppContextHelper.Companion.openActivity(context, ListArticle::class)
-                        }
-                    })
-            }
+                apiResponse
+            })
 
 
 

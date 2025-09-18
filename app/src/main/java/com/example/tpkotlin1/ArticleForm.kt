@@ -1,5 +1,6 @@
 package com.example.tpkotlin1
 
+import android.app.Application
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -15,6 +16,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.tpkotlin1.ViewModel.ArticleViewModel
@@ -22,7 +24,7 @@ import com.example.tpkotlin1.ui.theme.TpKotlin1Theme
 
 class ArticleForm : ComponentActivity() {
 
-    val articleView = ArticleViewModel()
+    val articleView = ArticleViewModel(application)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,37 +60,37 @@ fun ArticleFormulaire(viewModel: ArticleViewModel,id : String?) {
                 ,modifier = Modifier.fillMaxWidth().padding(bottom = 20.dp)
             )
 
-            EniTitle("Sign in")
+            EniTitle(stringResource(R.string.title_login))
             article.let {
-                EniTextField("Titre",
+                EniTextField(stringResource(R.string.label_article_title),
                     value = it.title,
                     onValueChange = { newTitle -> viewModel.article.value = viewModel.article.value.copy(title = newTitle)
                     }
                 )
             }
             article.let {
-                EniTextField("Description",
+                EniTextField(stringResource(R.string.label_article_desc),
                     value = it.desc,
                     onValueChange = { newDesc -> viewModel.article.value = viewModel.article.value.copy(desc = newDesc)
                     }
                 )
             }
             article.let {
-                EniTextField("Auteur",
+                EniTextField(stringResource(R.string.label_article_author),
                     value = it.author,
                     onValueChange = { newAuthor -> viewModel.article.value = viewModel.article.value.copy(author = newAuthor)
                     }
                 )
             }
             article.let {
-                EniTextField("Lien Img",
+                EniTextField(stringResource(R.string.label_article_linkImg),
                     value = it.imgPath,
                     onValueChange = { newImg -> viewModel.article.value = viewModel.article.value.copy(imgPath = newImg)
                     }
                 )
             }
 
-            EniButtonLogin("Connexion", onClick = {viewModel.ajouterArticle(context)
+            EniButtonClick(stringResource(R.string.btn_login), onClick = {viewModel.ajouterArticle(context)
             })
         }
     }
@@ -98,6 +100,6 @@ fun ArticleFormulaire(viewModel: ArticleViewModel,id : String?) {
 @Composable
 fun GreetingPreview2() {
     TpKotlin1Theme {
-        ArticleFormulaire(viewModel = ArticleViewModel(),"test")
+        ArticleFormulaire(viewModel = ArticleViewModel(Application() ),"test")
     }
 }
